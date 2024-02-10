@@ -31,6 +31,18 @@ public class IjinApp {
 			int selectCont = new Scanner(System.in).nextInt();
 			switch (selectCont) {
 			case 1:
+				System.out.println("");
+				Thread.sleep(1000);
+				System.out.println("突如として出現した時空の歪みから現れたのは、");
+				Thread.sleep(3000);
+				System.out.println("時代を超えて集まった名だたる偉人たち……");
+				Thread.sleep(3000);
+				System.out.println("現れた偉人達によって支配された都市へ出陣し、");
+				Thread.sleep(3000);
+				System.out.println("倒した偉人の力をカードに封印して仲間に！");
+				Thread.sleep(3000);
+				System.out.println("集めた偉人たちを従え、現代の天下統一を目指しましょう！");
+				Thread.sleep(3000);
 				p = new Player();
 				break;
 			case 2:
