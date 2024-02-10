@@ -32,7 +32,6 @@ public class IjinApp {
 			switch (selectCont) {
 			case 1:
 				p = new Player();
-				save(p);
 				break;
 			case 2:
 				p = load();
@@ -43,6 +42,12 @@ public class IjinApp {
 			}
 
 			while (true) {
+				if (p.getStamina()<=0) {
+					System.out.println("");
+					System.out.println((p.getMoney()/2)+"円支払ってスタミナを全回復しました！");
+					p.setMoney(p.getMoney()/2);
+					p.setStamina(p.getMaxStamina());
+				}
 				System.out.println("");
 				System.out.println("***MENU***");
 				System.out.println("1.出陣 / 2.ガシャ / 3.カード一覧 / 4.編成 / 5.修行");
@@ -50,16 +55,13 @@ public class IjinApp {
 				int selectMenu = new java.util.Scanner(System.in).nextInt();
 				switch (selectMenu) {
 				case 1:
-					p = load();
 					work(p);
 					break;
 				case 2:
-					p = load();
 					capsule(p);
 					break;
 				case 3:
 					while (true) {
-						p = load();
 						System.out.println("");
 						System.out.println("仲間になった偉人の詳細を確認できます");
 						System.out.println("-1・・・メニューに戻る");
@@ -90,16 +92,13 @@ public class IjinApp {
 					}
 					break;
 				case 4:
-					p = load();
 					organization(p);
 					break;
 				case 5:
-					p = load();
 					training(p);
 					break;
 				case 999:
 					p.setMoney(99999999);
-					save(p);
 					break;
 				case 0:
 					System.out.println("データを保存して終了します");
@@ -155,7 +154,7 @@ public class IjinApp {
 				System.out.println(p.MyCharacters.get(select).name + "を売却しました");
 				System.out.println("お金：" + p.getMoney() + "円（+" + salePrice + "円）");
 				p.MyCharacters.remove(select);
-				save(p);
+				break;
 			default:
 				return;
 			}
@@ -205,7 +204,6 @@ public class IjinApp {
 					System.out.println(fm.name + "が仲間になりました！");
 					p.Units.add(fm);
 					p.AreaList.add(new Harajuku());
-					save(p);
 					return;
 				case 2:
 					System.out.println("");
@@ -220,7 +218,6 @@ public class IjinApp {
 	}
 
 	public static void work(Player p) throws Exception {
-		p = load();
 		System.out.println("");
 		System.out.println("敵陣へ赴き、偉人カードやお金を集めましょう。");
 		if (p.MyCharacters.size() <= 0) { // 仲間が一人もいなければ
@@ -242,7 +239,7 @@ public class IjinApp {
 		for (int i = 0; i < 100; i += wa.progress) {
 			if ((p.getStamina() - wa.stRequired) < 0) {
 				System.out.println("スタミナが不足したため帰ります。");
-				break;
+				return;
 			}
 			int randomMoney = wa.randomMoney();
 			p.setStamina(-1 * wa.stRequired);
@@ -287,15 +284,12 @@ public class IjinApp {
 				p.setStamina(p.getMaxStamina());
 				System.out.println("スタミナが全回復しました");
 				wa.newArea(p);
-				save(p);
 				return;
 			} else if (result == false) {
-				save(p);
 				return;
 			}
 		case 2:
 			System.out.println("メニューに戻ります");
-			save(p);
 			return;
 		}
 
@@ -444,7 +438,6 @@ public class IjinApp {
 				case 1:
 					p.MyCharacters.get(selectCh1).rarityUp();
 					p.MyCharacters.remove(selectCh2);
-					save(p);
 					break;
 				case 2:
 					break;
@@ -525,7 +518,6 @@ public class IjinApp {
 
 			}
 			System.out.println("編成を変更しました");
-			save(p);
 			System.out.println("");
 			System.out.println("編成を続けますか？");
 			System.out.print("1.はい / 2.いいえ >> ");
@@ -644,7 +636,6 @@ public class IjinApp {
 					System.out.println("[☆" + get.rare + "]" + get.name + "が仲間になりました！");
 					p.MyCharacters.add(get);
 					p.setMoney(-(GashaList.get(selectGasha).price));
-					save(p);
 					break;
 				case 2:
 					if ( p.getMoney() < (GashaList.get(selectGasha).price*10)) {
@@ -666,7 +657,6 @@ public class IjinApp {
 							p.MyCharacters.add(get10);						}
 					}
 					p.setMoney(-(GashaList.get(selectGasha).price * 10));
-					save(p);
 					break;
 				case -1:
 					

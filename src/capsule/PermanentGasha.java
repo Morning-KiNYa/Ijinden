@@ -25,25 +25,35 @@ public class PermanentGasha extends Gasha {
 		this.price = 2500;
 		this.message = "※10回引くと最後の1枚は☆3確定！";
 		
+		capsuleSet();
+
+		this.pickUpCh = this.permanent4.get(new Random().nextInt(this.permanent4.size()));
+	}
+
+	public void capsuleSet() {
+		// 抽選しなおすために一度リストを空にする
+		this.permanent2.clear();
+		this.permanent3.clear();
+		this.permanent4.clear();
+
 		// ☆2
 		this.permanent2.add(new NakanoOenoOji());
 		this.permanent2.add(new SoganoIruka());
 		this.permanent2.add(new NakatominoKamatari());
-		
+
 		// ☆3
 		this.permanent3.add(new YamatoTakeru());
 		this.permanent3.add(new KanmuTenno());
 		this.permanent3.add(new SyoutokuTaishi());
-		
+
 		// ☆4
 		this.permanent4.add(new OdaNobunaga());
 		this.permanent4.add(new ToyotomiHideyoshi());
 		this.permanent4.add(new TokugawaIeyasu());
-		
-		this.pickUpCh = this.permanent4.get(new Random().nextInt(this.permanent4.size()));
 	}
-	
+
 	public Character Gasha1() {
+		capsuleSet();
 		Character obt = null;
 		int rare = new Random().nextInt(100) + 1;
 		if (rare < 89) {
@@ -58,8 +68,9 @@ public class PermanentGasha extends Gasha {
 		}
 		return obt;
 	}
-	
+
 	public Character Gasha10() {
+		capsuleSet();
 		Character obt = null;
 		int rare = new Random().nextInt(100) + 1;
 		if (rare < 96) {

@@ -1,17 +1,17 @@
 import java.util.Random;
 
 import charactar.Character;
-import charactar.Murasakishikibu;
-import charactar.ShirakawaTenno;
+import charactar.GotobaTenno;
+import charactar.HoujouMasako;
 
-public class Chiba extends Area {
+public class Osaka extends Area {
 	
-	public Chiba() {
-		this.name = "千葉";
-		this.progress = 7;
+	public Osaka() {
+		this.name = "大阪";
+		this.progress = 6;
 		this.stRequired = 7;
 		this.basicMoney = 70;
-		this.bossAdjustment = 2.7;
+		this.bossAdjustment = 2.8;
 	}
 
 	@Override
@@ -23,20 +23,20 @@ public class Chiba extends Area {
 	@Override
 	public Character dropChara() {
 		// TODO 自動生成されたメソッド・スタブ
-		return new Murasakishikibu();
+		return new GotobaTenno();
 	}
 
 	@Override
 	public Character dropBoss() {
 		// TODO 自動生成されたメソッド・スタブ
-		return new ShirakawaTenno();
+		return new HoujouMasako();
 	}
 
 	@Override
 	public Area newArea(Player p) {
-		if (p.AreaList.size() == 6) {
-			p.AreaList.add(6, new Saitama());
-			System.out.println("新たなエリア「埼玉」に出陣できるようになりました！");
+		if (p.AreaList.size() == 8) {
+			p.AreaList.add(8, new Kyoto());
+			System.out.println("新たなエリア「京都」に出陣できるようになりました！");
 		}
 		return null;
 	}
