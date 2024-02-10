@@ -11,7 +11,7 @@ public class Yokohama extends Area {
 		this.progress = 8;
 		this.stRequired = 6;
 		this.basicMoney = 60;
-		this.bossAdjustment = 1.6;
+		this.bossAdjustment = 2.6;
 	}
 
 	@Override

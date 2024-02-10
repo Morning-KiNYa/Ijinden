@@ -25,16 +25,6 @@ public class TenmuTenno extends Character {
 		this.skillSize = 1.3; // 効果倍率
 	}
 
-	@Override
-	public double[] skill() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-
-	@Override
-	public int attack(int type) {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
-	}
+	
 
 }

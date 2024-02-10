@@ -26,16 +26,4 @@ public class Himiko extends Character {
 
 	}
 
-	@Override
-	public double[] skill() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-
-	@Override
-	public int attack(int type) {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
-	}
-
 }

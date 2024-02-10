@@ -20,22 +20,6 @@ public class NakatominoKamatari extends Character {
 		this.skillSize = 1.3; // 効果量
 	}
 
-	@Override
-	public double[] skill() {
-		double range = 0;
-		// 誰の？ 0/自分 1/味方 2/相手
-		double status = 2;
-		// 何を？ 0/闘 1/知 2/心
-		double size = 1.3;
-		// どれくらい変動させる？
-		double[] skill = {range,status,size};
-		return skill;
-	}
-
-	@Override
-	public int attack(int type) {
-		// TODO 自動生成されたメソッド・スタブ
-		return 0;
-	}
+	
 
 }

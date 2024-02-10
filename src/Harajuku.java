@@ -11,7 +11,7 @@ public class Harajuku extends Area {
 		this.progress = 20;
 		this.stRequired = 1;
 		this.basicMoney = 10;
-		this.bossAdjustment = 1.1;
+		this.bossAdjustment = 2.1;
 	}
 
 	public int randomMoney() {

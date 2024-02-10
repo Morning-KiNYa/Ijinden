@@ -5,10 +5,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import capsule.Gasha;
+import capsule.PermanentGasha;
 import charactar.Character;
 import charactar.NakanoOenoOji;
 import charactar.NakatominoKamatari;
@@ -28,6 +32,7 @@ public class IjinApp {
 			switch (selectCont) {
 			case 1:
 				p = new Player();
+				save(p);
 				break;
 			case 2:
 				p = load();
@@ -40,16 +45,20 @@ public class IjinApp {
 			while (true) {
 				System.out.println("");
 				System.out.println("***MENU***");
-				System.out.println("1.出陣 / 2.カード一覧 / 3.編成 / 4.修行");
+				System.out.println("1.出陣 / 2.ガシャ / 3.カード一覧 / 4.編成 / 5.修行");
 				System.out.print("（0で終了） >> ");
 				int selectMenu = new java.util.Scanner(System.in).nextInt();
 				switch (selectMenu) {
 				case 1:
+					p = load();
 					work(p);
 					break;
 				case 2:
+					p = load();
+					capsule(p);
+					break;
+				case 3:
 					while (true) {
-						save(p);
 						p = load();
 						System.out.println("");
 						System.out.println("仲間になった偉人の詳細を確認できます");
@@ -80,15 +89,17 @@ public class IjinApp {
 						}
 					}
 					break;
-				case 3:
-					save(p);
+				case 4:
 					p = load();
 					organization(p);
 					break;
-				case 4:
-					save(p);
+				case 5:
 					p = load();
 					training(p);
+					break;
+				case 999:
+					p.setMoney(99999999);
+					save(p);
 					break;
 				case 0:
 					System.out.println("データを保存して終了します");
@@ -144,6 +155,7 @@ public class IjinApp {
 				System.out.println(p.MyCharacters.get(select).name + "を売却しました");
 				System.out.println("お金：" + p.getMoney() + "円（+" + salePrice + "円）");
 				p.MyCharacters.remove(select);
+				save(p);
 			default:
 				return;
 			}
@@ -193,6 +205,7 @@ public class IjinApp {
 					System.out.println(fm.name + "が仲間になりました！");
 					p.Units.add(fm);
 					p.AreaList.add(new Harajuku());
+					save(p);
 					return;
 				case 2:
 					System.out.println("");
@@ -207,6 +220,7 @@ public class IjinApp {
 	}
 
 	public static void work(Player p) throws Exception {
+		p = load();
 		System.out.println("");
 		System.out.println("敵陣へ赴き、偉人カードやお金を集めましょう。");
 		if (p.MyCharacters.size() <= 0) { // 仲間が一人もいなければ
@@ -273,12 +287,15 @@ public class IjinApp {
 				p.setStamina(p.getMaxStamina());
 				System.out.println("スタミナが全回復しました");
 				wa.newArea(p);
+				save(p);
 				return;
 			} else if (result == false) {
+				save(p);
 				return;
 			}
 		case 2:
 			System.out.println("メニューに戻ります");
+			save(p);
 			return;
 		}
 
@@ -398,10 +415,10 @@ public class IjinApp {
 			System.out.println("まずは出陣して仲間の偉人を集めましょう");
 			return;
 		}
-		save(p);
-		p = load();
+
 		System.out.println("");
 		System.out.println("同じ偉人を修行パートナーにして、\n能力を高めることができます");
+		System.out.println("すべての偉人を最大☆5まで育成することができます");
 		while (true) {
 			System.out.println("修行する偉人を選んでください");
 			int selectCh1 = displayMyCharacters(p.MyCharacters);
@@ -427,6 +444,7 @@ public class IjinApp {
 				case 1:
 					p.MyCharacters.get(selectCh1).rarityUp();
 					p.MyCharacters.remove(selectCh2);
+					save(p);
 					break;
 				case 2:
 					break;
@@ -435,10 +453,11 @@ public class IjinApp {
 					break;
 				}
 				return;
-			}else {
+			} else {
 				System.out.println("同じ偉人カードを選択してください");
 				break;
 			}
+
 		}
 	}
 
@@ -447,6 +466,7 @@ public class IjinApp {
 			System.out.println("まずは出陣して仲間の偉人を集めましょう");
 			return;
 		}
+
 		System.out.println("");
 		System.out.println("共に出陣する偉人を編成します");
 		while (true) {
@@ -505,7 +525,7 @@ public class IjinApp {
 
 			}
 			System.out.println("編成を変更しました");
-
+			save(p);
 			System.out.println("");
 			System.out.println("編成を続けますか？");
 			System.out.print("1.はい / 2.いいえ >> ");
@@ -570,8 +590,92 @@ public class IjinApp {
 		return p;
 	}
 
-	public static void capsull(Player p) {
+	public static void capsule(Player p) throws Exception {
+		if (p.MyCharacters.size() <= 0) {
+			System.out.println("");
+			System.out.println("まずは出陣して仲間の偉人を集めましょう");
+			return;
+		}
+		while (true) {
+			LocalDateTime now = LocalDateTime.now();
+			List<Gasha> GashaList = new ArrayList<Gasha>();
+			GashaList.add(new PermanentGasha());
+
+			//期間限定ガシャ
+			LocalDateTime limitedStart = LocalDateTime.of(2024, 2, 5, 15, 0, 0);
+			LocalDateTime limitedEnd = LocalDateTime.of(2024, 2, 16, 15, 0, 0);
+			if (now.isAfter(limitedStart) && now.isBefore(limitedEnd)) {
+			}
+			System.out.println("");
+			System.out.println("開催中のガシャ：");
+			System.out.println("-------------------------------------------------");
+			for (int i = 0; i < GashaList.size(); i++) {
+				System.out.println(i + "・・・" + GashaList.get(i).name);
+			}
+			System.out.println("-1・・・メニューに戻る");
+			System.out.println("-------------------------------------------------");
+			System.out.print("確認したいガシャを選んでください >> ");
+			int selectGasha = new Scanner(System.in).nextInt();
+			if (selectGasha == -1) {
+				return;
+			}
+			while (true) {
+				System.out.println("");
+				System.out.println(GashaList.get(selectGasha).name);
+				System.out.println("目玉カード：");
+				GashaList.get(selectGasha).pickUpCh.displayStatus();
+				System.out.println("[価格]1回 " + GashaList.get(selectGasha).price + "円 / 10回 "
+						+ (GashaList.get(selectGasha).price * 10) + "円 (現在の所持金：" + p.getMoney() + "円");
+				if (GashaList.get(selectGasha).message != null) {
+					System.out.println(GashaList.get(selectGasha).message);
+				}
+				System.out.println("1.1回引く / 2.10回引く / -1.戻る");
+				System.out.print("このガシャを引きますか？ >> ");
+				int select = new Scanner(System.in).nextInt();
+				System.out.println("");
+				switch (select) {
+				case 1:
+					if ( p.getMoney() < GashaList.get(selectGasha).price) {
+						System.out.println("お金が足りません");
+						break;
+					}
+					Thread.sleep(1000);
+					Character get = GashaList.get(selectGasha).Gasha1();
+					System.out.println("[☆" + get.rare + "]" + get.name + "が仲間になりました！");
+					p.MyCharacters.add(get);
+					p.setMoney(-(GashaList.get(selectGasha).price));
+					save(p);
+					break;
+				case 2:
+					if ( p.getMoney() < (GashaList.get(selectGasha).price*10)) {
+						System.out.println("お金が足りません");
+						break;
+					}
+					for (int i = 0; i < 10; i++) {
+						if (i == 9) {
+							System.out.println("");
+							Thread.sleep(1000);
+							Character get10 = GashaList.get(selectGasha).Gasha10();
+							System.out.println("[☆" + get10.rare + "]" + get10.name + "が仲間になりました！");
+							p.MyCharacters.add(get10);
+						} else {
+							System.out.println("");
+							Thread.sleep(1000);
+							Character get10 = GashaList.get(selectGasha).Gasha1();
+							System.out.println("[☆" + get10.rare + "]" + get10.name + "が仲間になりました！");
+							p.MyCharacters.add(get10);						}
+					}
+					p.setMoney(-(GashaList.get(selectGasha).price * 10));
+					save(p);
+					break;
+				case -1:
+					
+				}
+				break;
+
+			}
+
+		}
 
 	}
-
 }

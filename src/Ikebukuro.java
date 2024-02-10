@@ -11,7 +11,7 @@ public class Ikebukuro extends Area {
 	this.progress = 9;
 	this.stRequired = 5;
 	this.basicMoney = 50;
-	this.bossAdjustment = 1.5;
+	this.bossAdjustment = 2.5;
 	}
 
 	@Override

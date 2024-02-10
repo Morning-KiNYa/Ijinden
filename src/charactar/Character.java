@@ -33,8 +33,6 @@ public abstract class Character {
 		System.out.println("-------------------------------------------------");
 	}
 
-	public abstract double[] skill();
-
 	public void rarityUp() {
 		if (this.rare >= 5) {
 			System.out.println("これ以上、レアリティはあがりません");
@@ -53,7 +51,5 @@ public abstract class Character {
 			System.out.println("心:"+this.mental+"(+"+(int)mentalUP+")");
 		}
 	}
-
-	public abstract int attack(int type);
 
 }

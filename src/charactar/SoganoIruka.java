@@ -19,23 +19,6 @@ public class SoganoIruka extends Character {
 		this.skillSize = 1.3; // 効果倍率
 	}
 
-	@Override
-	public double[] skill() {
-		double range = 0;
-		// 誰の？
-		double status = 1;
-		// 何を？
-		double size = 1.3;
-		// どれくらい変動させる？
-		double[] skill = {range,status,size};
-		return skill;
-	}
-
-	@Override
-	public int attack(int type) {
-		int damage = 0;
-		/* ダメージ計算 */
-		return damage;
-	}
+	
 
 }

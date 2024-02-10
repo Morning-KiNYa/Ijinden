@@ -11,7 +11,7 @@ public class Chiba extends Area {
 		this.progress = 7;
 		this.stRequired = 7;
 		this.basicMoney = 70;
-		this.bossAdjustment = 1.7;
+		this.bossAdjustment = 2.7;
 	}
 
 	@Override

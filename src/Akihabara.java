@@ -12,7 +12,7 @@ public class Akihabara extends Area {
 		this.progress = 10;
 		this.stRequired = 4;
 		this.basicMoney = 40;
-		this.bossAdjustment = 1.4;
+		this.bossAdjustment = 2.4;
 	}
 
 	@Override

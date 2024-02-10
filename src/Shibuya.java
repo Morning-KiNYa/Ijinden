@@ -12,7 +12,7 @@ public class Shibuya extends Area {
 		this.progress = 10;
 		this.stRequired = 2;
 		this.basicMoney = 15;
-		this.bossAdjustment = 1.2;
+		this.bossAdjustment = 2.2;
 	}
 
 	@Override
