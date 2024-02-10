@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 import charactar.Character;
+import charactar.HoujouTokiyori;
+import charactar.HoujouYasutoki;
 import charactar.KanmuTenno;
+import charactar.MinamotonoYoritomo;
 import charactar.NakanoOenoOji;
 import charactar.NakatominoKamatari;
 import charactar.OdaNobunaga;
@@ -40,6 +43,9 @@ public class PermanentGasha extends Gasha {
 		this.permanent2.add(new NakanoOenoOji());
 		this.permanent2.add(new SoganoIruka());
 		this.permanent2.add(new NakatominoKamatari());
+		this.permanent2.add(new HoujouTokiyori());
+		this.permanent2.add(new HoujouYasutoki());
+		this.permanent2.add(new MinamotonoYoritomo());
 
 		// ☆3
 		this.permanent3.add(new YamatoTakeru());
