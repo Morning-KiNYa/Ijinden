@@ -33,9 +33,10 @@ public abstract class Character {
 		System.out.println("-------------------------------------------------");
 	}
 
-	public void rarityUp() {
+	public boolean rarityUp() {
 		if (this.rare >= 5) {
 			System.out.println("これ以上、レアリティはあがりません");
+			return false;
 		} else {
 			this.rare++;
 			System.out.println(this.name+"のレアリティが上がりました！");
@@ -49,6 +50,7 @@ public abstract class Character {
 			System.out.println("闘:"+this.physical+"(+"+(int)physicalUP+")");
 			System.out.println("知:"+this.intelligence+"(+"+(int)intelliUP+")");
 			System.out.println("心:"+this.mental+"(+"+(int)mentalUP+")");
+			return true;
 		}
 	}
 

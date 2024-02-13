@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import charactar.Character;
+import charactar.Cleopatra;
 import charactar.HoujouTokiyori;
 import charactar.HoujouYasutoki;
 import charactar.KanmuTenno;
@@ -12,11 +13,13 @@ import charactar.MinamotonoYoritomo;
 import charactar.NakanoOenoOji;
 import charactar.NakatominoKamatari;
 import charactar.OdaNobunaga;
+import charactar.OnonoKomachi;
 import charactar.SoganoIruka;
 import charactar.SyoutokuTaishi;
 import charactar.TokugawaIeyasu;
 import charactar.ToyotomiHideyoshi;
 import charactar.YamatoTakeru;
+import charactar.YangGuifei;
 
 public class PermanentGasha extends Gasha {
 	List<Character> permanent2 = new ArrayList<Character>();
@@ -51,6 +54,9 @@ public class PermanentGasha extends Gasha {
 		this.permanent3.add(new YamatoTakeru());
 		this.permanent3.add(new KanmuTenno());
 		this.permanent3.add(new SyoutokuTaishi());
+		this.permanent3.add(new Cleopatra());
+		this.permanent3.add(new YangGuifei());
+		this.permanent3.add(new OnonoKomachi());
 
 		// ☆4
 		this.permanent4.add(new OdaNobunaga());
@@ -68,7 +74,7 @@ public class PermanentGasha extends Gasha {
 		} else if (rare < 96) {
 			int lottery = new Random().nextInt(this.permanent3.size());
 			obt = this.permanent3.get(lottery);
-		} else if (rare < 100) {
+		} else if (rare <= 100) {
 			int lottery = new Random().nextInt(this.permanent4.size());
 			obt = this.permanent4.get(lottery);
 		}
@@ -82,7 +88,7 @@ public class PermanentGasha extends Gasha {
 		if (rare < 96) {
 			int lottery = new Random().nextInt(this.permanent3.size());
 			obt = this.permanent3.get(lottery);
-		} else if (rare < 100) {
+		} else if (rare <= 100) {
 			int lottery = new Random().nextInt(this.permanent4.size());
 			obt = this.permanent4.get(lottery);
 		}

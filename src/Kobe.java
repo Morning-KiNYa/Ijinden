@@ -1,17 +1,17 @@
 import java.util.Random;
 
 import charactar.Character;
-import charactar.HoujouTokimune;
-import charactar.KhubilaiKhan;
+import charactar.JeanneDarc;
+import charactar.SoganoUmako;
 
-public class Kyoto extends Area {
+public class Kobe extends Area {
 	
-	public Kyoto() {
-		this.name = "京都";
+	public Kobe() {
+		this.name = "神戸";
 		this.progress = 5;
 		this.stRequired = 7;
 		this.basicMoney = 70;
-		this.bossAdjustment = 2.9;
+		this.bossAdjustment = 3.0;
 	}
 
 	@Override
@@ -23,20 +23,20 @@ public class Kyoto extends Area {
 	@Override
 	public Character dropChara() {
 		// TODO 自動生成されたメソッド・スタブ
-		return new HoujouTokimune();
+		return new SoganoUmako();
 	}
 
 	@Override
 	public Character dropBoss() {
 		// TODO 自動生成されたメソッド・スタブ
-		return new KhubilaiKhan();
+		return new JeanneDarc();
 	}
 
 	@Override
 	public Area newArea(Player p) {
-		if (p.AreaList.size() == 9) {
-			p.AreaList.add(9, new Kobe());
-			System.out.println("新たなエリア「神戸」に出陣できるようになりました！");
+		if (p.AreaList.size() == 10) {
+			p.AreaList.add(10, new Hiroshima());
+			System.out.println("新たなエリア「広島」に出陣できるようになりました！");
 		}
 		return null;
 	}

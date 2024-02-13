@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 import capsule.Gasha;
 import capsule.PermanentGasha;
+import capsule.ValentineGasha;
 import charactar.Character;
 import charactar.NakanoOenoOji;
 import charactar.NakatominoKamatari;
@@ -57,13 +58,13 @@ public class IjinApp {
 				if (p.getStamina()<=0) {
 					System.out.println("");
 					System.out.println((p.getMoney()/2)+"円支払ってスタミナを全回復しました！");
-					p.setMoney(p.getMoney()/2);
+					p.setMoney(-(p.getMoney()/2));
 					p.setStamina(p.getMaxStamina());
 				}
 				System.out.println("");
 				System.out.println("***MENU***");
 				System.out.println("1.出陣 / 2.ガシャ / 3.カード一覧 / 4.編成 / 5.修行");
-				System.out.print("（0で終了） >> ");
+				System.out.print("（0でセーブして終了） >> ");
 				int selectMenu = new java.util.Scanner(System.in).nextInt();
 				switch (selectMenu) {
 				case 1:
@@ -148,7 +149,11 @@ public class IjinApp {
 		while (true) {
 			System.out.println("");
 			System.out.println("売却する偉人カードを選択してください");
+			System.out.println("-1・・・戻る");
 			int select = displayMyCharacters(p.MyCharacters);
+			if (select == -1) {
+				return;
+			}
 			p.MyCharacters.get(select).displayStatus();
 			System.out.println("この偉人カードを売却しますか？（売却価格:" + (p.MyCharacters.get(select).rare * 120) + "円）");
 			System.out.print("1.はい / 2.いいえ >> ");
@@ -167,9 +172,12 @@ public class IjinApp {
 				System.out.println("お金：" + p.getMoney() + "円（+" + salePrice + "円）");
 				p.MyCharacters.remove(select);
 				break;
+			case 2:
+				break;
 			default:
 				return;
 			}
+			return;
 		}
 	}
 
@@ -231,12 +239,14 @@ public class IjinApp {
 
 	public static void work(Player p) throws Exception {
 		System.out.println("");
-		System.out.println("敵陣へ赴き、偉人カードやお金を集めましょう。");
+		System.out.println("敵陣へ赴き、偉人カードやお金を集めましょう");
+		System.out.println("現在のスタミナ："+p.getStamina()+"/"+p.getMaxStamina());
 		if (p.MyCharacters.size() <= 0) { // 仲間が一人もいなければ
 			tutorial(p);
 		}
 		System.out.println("");
 		System.out.println("出陣エリア一覧");
+		System.out.println("-1・・・メニューに戻る");
 		for (Area s : p.AreaList) {
 			System.out.println(p.AreaList.indexOf(s) + "・・・" + s.name + "(消費スタミナ:" + s.stRequired + " 獲得金:"
 					+ s.basicMoney + "～？）");
@@ -244,6 +254,9 @@ public class IjinApp {
 
 		System.out.print("出陣するエリアを選択してください >> ");
 		int select = new java.util.Scanner(System.in).nextInt();
+		if (select == -1) {
+			return;
+		}
 		Area wa = p.AreaList.get(select);
 		System.out.println("");
 		System.out.println(wa.name + "エリアへ出陣します");
@@ -253,9 +266,14 @@ public class IjinApp {
 				System.out.println("スタミナが不足したため帰ります。");
 				return;
 			}
+			if (p.getStamina() == 0) {
+				System.out.println("スタミナがなくなったため帰ります。");
+				return;
+			}
 			int randomMoney = wa.randomMoney();
 			p.setStamina(-1 * wa.stRequired);
 			p.setMoney(randomMoney);
+			System.out.println("進捗："+i+"/100%");
 			System.out.println(
 					"スタミナ：" + p.getStamina() + "/" + p.getMaxStamina() + "(" + (-1 * wa.stRequired) + ") / お金："
 							+ p.getMoney()
@@ -276,6 +294,7 @@ public class IjinApp {
 			System.out.println("-------------------------------------------------");
 			Thread.sleep(1000);
 		}
+		System.out.println("進捗：100/100%");
 		System.out.println("STAGE CLEAR!!");
 		System.out.println("");
 		Thread.sleep(1000);
@@ -388,12 +407,15 @@ public class IjinApp {
 		int BossTotalSta = (int) ((int) (bossSta[0] + bossSta[1] + bossSta[2]) * wa.bossAdjustment);
 
 		System.out.println("");
-		System.out.print("勝敗は…");
+		System.out.print("勝敗は");
 		Thread.sleep(1000);
 		System.out.print("…");
 		Thread.sleep(1000);
-		System.out.println("?!");
+		System.out.print("…");
+		Thread.sleep(1000);
+		System.out.print("?!");
 		Thread.sleep(3000);
+		System.out.println("");
 		System.out.println("自陣戦闘力：" + MyTotalSta);
 		Thread.sleep(3000);
 		System.out.println("敵陣戦闘力：" + BossTotalSta);
@@ -426,13 +448,22 @@ public class IjinApp {
 		System.out.println("同じ偉人を修行パートナーにして、\n能力を高めることができます");
 		System.out.println("すべての偉人を最大☆5まで育成することができます");
 		while (true) {
+			System.out.println("");
 			System.out.println("修行する偉人を選んでください");
+			System.out.println("-1・・・メニューに戻る");
 			int selectCh1 = displayMyCharacters(p.MyCharacters);
+			if (selectCh1 == -1) {
+				return;
+			}
 			System.out.println("");
 			System.out.println("修行のパートナーになる偉人を選んでください");
+			System.out.println("-1・・・戻る");
 			int selectCh2 = displayMyCharacters(p.MyCharacters);
+			if (selectCh2 == -1) {
+				break;
+			}
 			if (selectCh1 == selectCh2) {
-				System.out.println("同じ偉人カードが選択されました");
+				System.out.println("全く同じ偉人カードが選択されました");
 				break;
 			}
 			if (p.MyCharacters.get(selectCh1).name.equals(p.MyCharacters.get(selectCh2).name)) {
@@ -448,8 +479,11 @@ public class IjinApp {
 				System.out.println("");
 				switch (selectLesson) {
 				case 1:
-					p.MyCharacters.get(selectCh1).rarityUp();
+					boolean lesson = p.MyCharacters.get(selectCh1).rarityUp();
+					if (lesson == true) {
 					p.MyCharacters.remove(selectCh2);
+					} else if (lesson == false) {
+					}
 					break;
 				case 2:
 					break;
@@ -457,9 +491,8 @@ public class IjinApp {
 					System.out.println("正しい数字を入力してください");
 					break;
 				}
-				return;
 			} else {
-				System.out.println("同じ偉人カードを選択してください");
+				System.out.println("同じ種類の偉人カードを選択してください");
 				break;
 			}
 
@@ -477,24 +510,24 @@ public class IjinApp {
 		while (true) {
 
 			System.out.println("");
-			System.out.println("現在のメンバー：");
+			System.out.println("現在の編成：");
+			System.out.println("-1・・・メニューに戻る");
 			for (int i = 0; i < p.Units.size(); i++) {
 				if (p.Units.get(i) == null) {
-					System.out.println(i + "・・・（メンバーなし）");
+					System.out.println(i + "・・・（編成されていません）");
 				} else {
 					System.out.println(i + "・・・[☆" + p.Units.get(i).rare + "]" + p.Units.get(i).name);
 				}
 			}
 			if (p.Units.size() == 1) {
-				System.out.println("1・・・（メンバーなし）");
-				System.out.println("2・・・（メンバーなし）");
+				System.out.println("1・・・（編成されていません）");
+				System.out.println("2・・・（編成されていません）");
 			} else if (p.Units.size() == 2) {
-				System.out.println("2・・・（メンバーなし）");
+				System.out.println("2・・・（編成されていません）");
 			}
-			System.out.println("9・・・メニューに戻る");
 			System.out.print("入れ替える偉人を選んでください >> ");
 			int selectMem = new Scanner(System.in).nextInt();
-			if (selectMem == 9) {
+			if (selectMem == -1) {
 				return;
 			}
 			if (selectMem > 2) {
@@ -609,6 +642,7 @@ public class IjinApp {
 			LocalDateTime limitedStart = LocalDateTime.of(2024, 2, 5, 15, 0, 0);
 			LocalDateTime limitedEnd = LocalDateTime.of(2024, 2, 16, 15, 0, 0);
 			if (now.isAfter(limitedStart) && now.isBefore(limitedEnd)) {
+				GashaList.add(new ValentineGasha());
 			}
 			System.out.println("");
 			System.out.println("開催中のガシャ：");
