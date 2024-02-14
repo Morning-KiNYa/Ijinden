@@ -55,10 +55,10 @@ public class IjinApp {
 			}
 
 			while (true) {
-				if (p.getStamina()<=0) {
+				if (p.getStamina() <= 0) {
 					System.out.println("");
-					System.out.println((p.getMoney()/2)+"円支払ってスタミナを全回復しました！");
-					p.setMoney(-(p.getMoney()/2));
+					System.out.println((p.getMoney() / 2) + "円支払ってスタミナを全回復しました！");
+					p.setMoney(-(p.getMoney() / 2));
 					p.setStamina(p.getMaxStamina());
 				}
 				System.out.println("");
@@ -240,7 +240,7 @@ public class IjinApp {
 	public static void work(Player p) throws Exception {
 		System.out.println("");
 		System.out.println("敵陣へ赴き、偉人カードやお金を集めましょう");
-		System.out.println("現在のスタミナ："+p.getStamina()+"/"+p.getMaxStamina());
+		System.out.println("現在のスタミナ：" + p.getStamina() + "/" + p.getMaxStamina());
 		if (p.MyCharacters.size() <= 0) { // 仲間が一人もいなければ
 			tutorial(p);
 		}
@@ -255,6 +255,10 @@ public class IjinApp {
 		System.out.print("出陣するエリアを選択してください >> ");
 		int select = new java.util.Scanner(System.in).nextInt();
 		if (select == -1) {
+			return;
+		}
+		if (select >= p.AreaList.size()) {
+			System.out.println("正しい数字を入力してください");
 			return;
 		}
 		Area wa = p.AreaList.get(select);
@@ -273,7 +277,7 @@ public class IjinApp {
 			int randomMoney = wa.randomMoney();
 			p.setStamina(-1 * wa.stRequired);
 			p.setMoney(randomMoney);
-			System.out.println("進捗："+i+"/100%");
+			System.out.println("進捗：" + i + "/100%");
 			System.out.println(
 					"スタミナ：" + p.getStamina() + "/" + p.getMaxStamina() + "(" + (-1 * wa.stRequired) + ") / お金："
 							+ p.getMoney()
@@ -321,6 +325,9 @@ public class IjinApp {
 			}
 		case 2:
 			System.out.println("メニューに戻ります");
+			return;
+		default:
+			System.out.println("正しく入力されなかったためメニューに戻ります");
 			return;
 		}
 
@@ -481,7 +488,7 @@ public class IjinApp {
 				case 1:
 					boolean lesson = p.MyCharacters.get(selectCh1).rarityUp();
 					if (lesson == true) {
-					p.MyCharacters.remove(selectCh2);
+						p.MyCharacters.remove(selectCh2);
 					} else if (lesson == false) {
 					}
 					break;
@@ -657,6 +664,10 @@ public class IjinApp {
 			if (selectGasha == -1) {
 				return;
 			}
+			if (selectGasha >= GashaList.size()) {
+				System.out.println("正しい数字を入力してください");
+				return;
+			}
 			while (true) {
 				System.out.println("");
 				System.out.println(GashaList.get(selectGasha).name);
@@ -673,7 +684,7 @@ public class IjinApp {
 				System.out.println("");
 				switch (select) {
 				case 1:
-					if ( p.getMoney() < GashaList.get(selectGasha).price) {
+					if (p.getMoney() < GashaList.get(selectGasha).price) {
 						System.out.println("お金が足りません");
 						break;
 					}
@@ -684,7 +695,7 @@ public class IjinApp {
 					p.setMoney(-(GashaList.get(selectGasha).price));
 					break;
 				case 2:
-					if ( p.getMoney() < (GashaList.get(selectGasha).price*10)) {
+					if (p.getMoney() < (GashaList.get(selectGasha).price * 10)) {
 						System.out.println("お金が足りません");
 						break;
 					}
@@ -700,12 +711,13 @@ public class IjinApp {
 							Thread.sleep(1000);
 							Character get10 = GashaList.get(selectGasha).Gasha1();
 							System.out.println("[☆" + get10.rare + "]" + get10.name + "が仲間になりました！");
-							p.MyCharacters.add(get10);						}
+							p.MyCharacters.add(get10);
+						}
 					}
 					p.setMoney(-(GashaList.get(selectGasha).price * 10));
 					break;
 				case -1:
-					
+
 				}
 				break;
 
